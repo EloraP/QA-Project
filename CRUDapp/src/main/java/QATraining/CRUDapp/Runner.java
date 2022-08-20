@@ -7,10 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-/**
- * Hello world!
- *
- */
 public class Runner {
 	
 	private static Connection conn;

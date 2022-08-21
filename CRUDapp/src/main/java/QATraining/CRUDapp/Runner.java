@@ -24,5 +24,12 @@ public class Runner {
 			e.printStackTrace();
 		}
     	
+    	Choices start = new Choices();
+        start.options();
+    	
     }
+    
+    
+    
+    
 }

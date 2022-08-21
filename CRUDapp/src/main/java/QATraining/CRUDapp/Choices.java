@@ -21,7 +21,41 @@ public class Choices {
 				switch(crud.toLowerCase()){
 				
 				case "create":
-					System.out.println("create file");
+					
+					Strike strike = new Strike();
+					
+					System.out.println("Enter Date and Time: (YYYY-MM-DD HH:MM:SS)");
+					String date = sc.nextLine();
+					strike.setDateOfStrike(date);
+					
+					System.out.println("Enter Location: ");
+					String location = sc.nextLine();
+					strike.setLocation(location);
+					
+					System.out.println("Enter Leader: ");
+					String leader = sc.nextLine();
+					strike.setLeader(leader);
+
+					System.out.println("Enter Trade Union: ");
+					String tradeUnion = sc.nextLine();
+					strike.setTradeUnion(tradeUnion);
+					
+					System.out.println("Enter Work Area: ");
+					String workArea = sc.nextLine();
+					strike.setWorkArea(workArea);
+					
+					System.out.println("Enter Capacity:");
+					int capacity = sc.nextInt();
+					sc.nextLine();
+					strike.setCapacity(capacity);
+					
+					System.out.println(strike.getDateOfStrike());
+					System.out.println(strike.getCapacity());
+					System.out.println(strike.getLeader());
+					System.out.println(strike.getLocation());
+					System.out.println(strike.getTradeUnion());
+					System.out.println(strike.getWorkArea());
+					
 					break;
 				
 				case "read":

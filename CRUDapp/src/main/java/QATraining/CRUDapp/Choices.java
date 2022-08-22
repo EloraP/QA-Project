@@ -63,7 +63,20 @@ public class Choices {
 					break;
 				
 				case "update":
-					System.out.println("update file");
+					System.out.println("Enter id of record to update: ");
+					
+					int uid = sc.nextInt();
+					sc.nextLine();
+					
+					System.out.println("Entre feature to update: (date, location, leader, tradeUnion, workArea, capacity)");
+					String feature = sc.nextLine();
+					
+					System.out.println("Enter the new " + feature + " of the strike: ");
+					String value = sc.nextLine();
+					
+					System.out.println(feature);
+					System.out.println(value);
+					
 					break;
 					
 				case "delete":

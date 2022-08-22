@@ -2,12 +2,22 @@ package QATraining.CRUDapp;
 
 public class Strike {
 	
+	
+	private int id; 
 	private String dateOfStrike;
 	private String location;
 	private int leaderID;
 	private int tradeUnionID;
 	private String workArea;
 	private int capacity;
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getDateOfStrike() {
 		return dateOfStrike;

@@ -24,38 +24,52 @@ public class Choices {
 				
 				case "create":
 					
-					Strike strike = new Strike();
+					System.out.println("Select table to add to:");
+					System.out.println("1. Strikes");
+					System.out.println("2. Trade Unions");
+					System.out.println("3. Leaders");
 					
-					System.out.println("Enter Date and Time: (YYYY-MM-DD HH:MM:SS)");
-					String date = sc.nextLine();
-					strike.setDateOfStrike(date);
-					
-					System.out.println("Enter Location: ");
-					String location = sc.nextLine();
-					strike.setLocation(location);
-					
-					System.out.println("Enter Leader: ");
-					int leader = sc.nextInt();
-					sc.nextLine();	
-					strike.setLeaderID(leader);
-
-					System.out.println("Enter Trade Union: ");
-					int tradeUnion = sc.nextInt();
+					int choice = sc.nextInt();
 					sc.nextLine();
-					strike.setTradeUnionID(tradeUnion);
 					
-					System.out.println("Enter Work Area: ");
-					String workArea = sc.nextLine();
-					strike.setWorkArea(workArea);
+					switch(choice) {
 					
-					System.out.println("Enter Capacity:");
-					int capacity = sc.nextInt();
-					sc.nextLine();
-					strike.setCapacity(capacity);
-					
-					q.create(strike);
-					
-					break;
+					case 1:
+						Strike strike = new Strike();
+						
+						System.out.println("Enter Date and Time: (YYYY-MM-DD HH:MM:SS)");
+						String date = sc.nextLine();
+						strike.setDateOfStrike(date);
+						
+						System.out.println("Enter Location: ");
+						String location = sc.nextLine();
+						strike.setLocation(location);
+						
+						System.out.println("Enter Leader: ");
+						int leader = sc.nextInt();
+						sc.nextLine();	
+						strike.setLeaderID(leader);
+	
+						System.out.println("Enter Trade Union: ");
+						int tradeUnion = sc.nextInt();
+						sc.nextLine();
+						strike.setTradeUnionID(tradeUnion);
+						
+						System.out.println("Enter Work Area: ");
+						String workArea = sc.nextLine();
+						strike.setWorkArea(workArea);
+						
+						System.out.println("Enter Capacity:");
+						int capacity = sc.nextInt();
+						sc.nextLine();
+						strike.setCapacity(capacity);
+						
+						q.create(strike);
+						
+						break;
+						
+					case 2: 
+					}
 				
 				case "read":
 					System.out.println("read file");

@@ -86,7 +86,13 @@ public class CRUDqueries {
 	}
 	
 	public void close() {
-		System.out.println("close connection");
+		try {
+			conn.close();
+			System.out.println("Closed!");
+		} catch (SQLException e) {
+			System.out.println("Closing connection...");
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -80,7 +80,15 @@ public class Choices {
 					break;
 					
 				case "delete":
-					System.out.println("delete file");
+					System.out.println("Enter id of record to delete: ");
+					int id = sc.nextInt();
+					sc.nextLine();
+					break;
+					
+				case "search id":
+					System.out.println("Enter id of record to view:");
+					int id2 = sc.nextInt();
+					sc.nextLine();
 					break;
 					
 				default: 

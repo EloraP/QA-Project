@@ -24,7 +24,7 @@ public class CRUDqueries {
 	}
 	
 	public void create(Strike s) {
-		String create = "INSERT INTO strikes(dateOfStrike, location, leader, tradeUnion, workArea, capacity) "
+		String create = "INSERT INTO strikes(dateOfStrike, location, leaderID, tradeUnion, workArea, capacity) "
 				+ "VALUES ('" + s.getDateOfStrike() + "', '" + s.getLocation() + "', '" 
 				+ s.getLeader() + "', '" + s.getTradeUnion() + "', '" + s.getWorkArea() + "', " 
 				+ s.getCapacity() + ");";
@@ -47,7 +47,7 @@ public class CRUDqueries {
 				System.out.println("ID: " + rs.getInt("id"));
 				System.out.println("Date: " + rs.getString("dateOfStrike"));
 				System.out.println("Location: " + rs.getString("location"));
-				System.out.println("Leader: " + rs.getString("leader"));
+				System.out.println("Leader ID: " + rs.getString("leaderID"));
 				System.out.println("Trade Union: " + rs.getString("tradeUnion"));
 				System.out.println("Work Area: " + rs.getString("workArea"));
 				System.out.println("Capacity: " + rs.getInt("capacity"));

@@ -35,8 +35,9 @@ public class Choices {
 					strike.setLocation(location);
 					
 					System.out.println("Enter Leader: ");
-					String leader = sc.nextLine();
-					strike.setLeader(leader);
+					int leader = sc.nextInt();
+					sc.nextLine();	
+					strike.setLeaderID(leader);
 
 					System.out.println("Enter Trade Union: ");
 					String tradeUnion = sc.nextLine();

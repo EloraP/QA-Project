@@ -4,7 +4,7 @@ public class Strike {
 	
 	private String dateOfStrike;
 	private String location;
-	private String leader;
+	private int leaderID;
 	private String tradeUnion;
 	private String workArea;
 	private int capacity;
@@ -25,11 +25,11 @@ public class Strike {
 		this.location = location;
 	}
 	
-	public String getLeader() {
-		return leader;
+	public int getLeader() {
+		return leaderID;
 	}
-	public void setLeader(String leader) {
-		this.leader = leader;
+	public void setLeaderID(int leaderID) {
+		this.leaderID = leaderID;
 	}
 	
 	public String getTradeUnion() {

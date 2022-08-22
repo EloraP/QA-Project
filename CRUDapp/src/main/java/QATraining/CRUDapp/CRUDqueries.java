@@ -24,7 +24,18 @@ public class CRUDqueries {
 	}
 	
 	public void create(Strike s) {
-		System.out.println("create strike");
+		String create = "INSERT INTO strikes(dateOfStrike, location, leader, tradeUnion, workArea, capacity) "
+				+ "VALUES ('" + s.getDateOfStrike() + "', '" + s.getLocation() + "', '" 
+				+ s.getLeader() + "', '" + s.getTradeUnion() + "', '" + s.getWorkArea() + "', " 
+				+ s.getCapacity() + ");";
+		
+		try {
+			stmt.executeUpdate(create);
+			System.out.println("Create statement executed");
+		} catch (SQLException e) {
+			System.out.println("Bad query");
+			e.printStackTrace();
+		}
 	}
 	
 	public void view() {

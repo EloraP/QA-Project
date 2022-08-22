@@ -14,6 +14,8 @@ public class Choices {
 	
 	public void options() {
 		
+		CRUDqueries q = new CRUDqueries();
+		
 		String crud = getInput();
 		
 		try {
@@ -49,17 +51,13 @@ public class Choices {
 					sc.nextLine();
 					strike.setCapacity(capacity);
 					
-					System.out.println(strike.getDateOfStrike());
-					System.out.println(strike.getCapacity());
-					System.out.println(strike.getLeader());
-					System.out.println(strike.getLocation());
-					System.out.println(strike.getTradeUnion());
-					System.out.println(strike.getWorkArea());
+					q.create(strike);
 					
 					break;
 				
 				case "read":
 					System.out.println("read file");
+					q.view();
 					break;
 				
 				case "update":
@@ -74,8 +72,7 @@ public class Choices {
 					System.out.println("Enter the new " + feature + " of the strike: ");
 					String value = sc.nextLine();
 					
-					System.out.println(feature);
-					System.out.println(value);
+					q.update(uid, value,  feature);
 					
 					break;
 					
@@ -83,6 +80,8 @@ public class Choices {
 					System.out.println("Enter id of record to delete: ");
 					int id = sc.nextInt();
 					sc.nextLine();
+					
+					q.delete(id);
 					break;
 					
 				case "search id":
@@ -110,7 +109,7 @@ public class Choices {
 		} 
 		
 		finally {
-			System.out.println("end connection");
+			q.close();
 		}
 	}
 		

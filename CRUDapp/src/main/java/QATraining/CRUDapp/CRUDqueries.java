@@ -61,7 +61,16 @@ public class CRUDqueries {
 	}
 	
 	public void update(int id, String value, String feature) {
-		System.out.println("update " + id);
+		String update = "UPDATE strikes SET " + feature + " = '" + value + "' WHERE id = " + id + ";";
+		
+		try {
+			stmt.executeUpdate(update);
+			System.out.println("Update statement executed");
+			
+		}catch (SQLException e) {
+			System.out.println("Bad query");
+			e.printStackTrace();
+		}
 	}
 	
 	public void delete(int id) {

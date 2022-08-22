@@ -40,8 +40,9 @@ public class Choices {
 					strike.setLeaderID(leader);
 
 					System.out.println("Enter Trade Union: ");
-					String tradeUnion = sc.nextLine();
-					strike.setTradeUnion(tradeUnion);
+					int tradeUnion = sc.nextInt();
+					sc.nextLine();
+					strike.setTradeUnionID(tradeUnion);
 					
 					System.out.println("Enter Work Area: ");
 					String workArea = sc.nextLine();

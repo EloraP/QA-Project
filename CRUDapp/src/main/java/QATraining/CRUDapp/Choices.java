@@ -51,13 +51,6 @@ public class Choices {
 					sc.nextLine();
 					strike.setCapacity(capacity);
 					
-					System.out.println(strike.getDateOfStrike());
-					System.out.println(strike.getCapacity());
-					System.out.println(strike.getLeader());
-					System.out.println(strike.getLocation());
-					System.out.println(strike.getTradeUnion());
-					System.out.println(strike.getWorkArea());
-					
 					q.create(strike);
 					
 					break;
@@ -116,7 +109,7 @@ public class Choices {
 		} 
 		
 		finally {
-			System.out.println("end connection");
+			q.close();
 		}
 	}
 		

@@ -23,11 +23,11 @@ public class CRUDqueries {
 		}
 	}
 	
-	public void create(Strike s) {
-		String create = "INSERT INTO strikes(dateOfStrike, location, leaderID, tradeUnion, workArea, capacity) "
-				+ "VALUES ('" + s.getDateOfStrike() + "', '" + s.getLocation() + "', '" 
-				+ s.getLeader() + "', '" + s.getTradeUnionID() + "', '" + s.getWorkArea() + "', " 
-				+ s.getCapacity() + ");";
+	public Strike create(String table, Object s) {
+		String create = "INSERT INTO " + table + " " 
+				+ "VALUES ('" + ((Strike) s).getDateOfStrike() + "', '" + ((Strike) s).getLocation() + "', '" 
+				+ ((Strike) s).getLeader() + "', '" + ((Strike) s).getTradeUnionID() + "', '" + ((Strike) s).getWorkArea() + "', " 
+				+ ((Strike) s).getCapacity() + ");";
 		
 		try {
 			stmt.executeUpdate(create);
@@ -36,28 +36,75 @@ public class CRUDqueries {
 			System.out.println("Bad query");
 			e.printStackTrace();
 		}
+		
+		return (Strike) s;
 	}
 	
-	public void view() {
-		String read = "SELECT * FROM strikes";
+	public void view(int table) {
 		
-		try {
-			rs = stmt.executeQuery(read);
-			while (rs.next()) {
-				System.out.println("ID: " + rs.getInt("id"));
-				System.out.println("Date: " + rs.getString("dateOfStrike"));
-				System.out.println("Location: " + rs.getString("location"));
-				System.out.println("Leader ID: " + rs.getString("leaderID"));
-				System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
-				System.out.println("Work Area: " + rs.getString("workArea"));
-				System.out.println("Capacity: " + rs.getInt("capacity"));
-				System.out.println();
-			}
+		String read;
+		if(table == 1) {
+			read = "SELECT * FROM strikes";
+			
+			try {
+				rs = stmt.executeQuery(read);
+				while (rs.next()) {
+					System.out.println("ID: " + rs.getInt("id"));
+					System.out.println("Date: " + rs.getString("dateOfStrike"));
+					System.out.println("Location: " + rs.getString("location"));
+					System.out.println("Leader ID: " + rs.getString("leaderID"));
+					System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
+					System.out.println("Work Area: " + rs.getString("workArea"));
+					System.out.println("Capacity: " + rs.getInt("capacity"));
+					System.out.println();
+				}
 
-		} catch (SQLException e) {
-			System.out.println("Bad query");
-			e.printStackTrace();
+			} catch (SQLException e) {
+				System.out.println("Bad query");
+				e.printStackTrace();
+			}
+			
+		}else if(table == 2) {
+			read = "SELECT * FROM tradeUnions";
+			
+			try {
+				rs = stmt.executeQuery(read);
+				while (rs.next()) {
+					System.out.println("ID: " + rs.getInt("id"));
+					System.out.println("Full Name: " + rs.getString("fullName"));
+					System.out.println("Abreviated Name: " + rs.getString("TUName"));
+					System.out.println("Number of Members: " + rs.getInt("numberOfMembers"));
+					System.out.println("Year: " + rs.getInt("established"));
+					System.out.println();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("Bad query");
+				e.printStackTrace();
+			}
+			
+		}else if(table == 3) {
+			read = "SELECT * FROM leaders";
+			
+			try {
+				rs = stmt.executeQuery(read);
+				while (rs.next()) {
+					System.out.println("ID: " + rs.getInt("id"));
+					System.out.println("Leader Name: " + rs.getString("leaderName"));
+					System.out.println("Age: " + rs.getInt("age"));
+					System.out.println("Years of Experience: " + rs.getInt("yearsOfExperience"));
+					System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
+					System.out.println();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("Bad query");
+				e.printStackTrace();
+			}
+			
 		}
+		
+		
 	}
 	
 	public void update(int id, String value, String feature) {

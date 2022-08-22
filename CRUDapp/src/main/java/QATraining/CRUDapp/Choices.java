@@ -38,42 +38,68 @@ public class Choices {
 						Strike strike = new Strike();
 						
 						System.out.println("Enter Date and Time: (YYYY-MM-DD HH:MM:SS)");
-						String date = sc.nextLine();
-						strike.setDateOfStrike(date);
+						String strInput = sc.nextLine();
+						strike.setDateOfStrike(strInput);
 						
 						System.out.println("Enter Location: ");
-						String location = sc.nextLine();
-						strike.setLocation(location);
+						strInput= sc.nextLine();
+						strike.setLocation(strInput);
 						
-						System.out.println("Enter Leader: ");
-						int leader = sc.nextInt();
+						System.out.println("Enter Leader ID: ");
+						int intInput = sc.nextInt();
 						sc.nextLine();	
-						strike.setLeaderID(leader);
+						strike.setLeaderID(intInput);
 	
-						System.out.println("Enter Trade Union: ");
-						int tradeUnion = sc.nextInt();
+						System.out.println("Enter Trade Union ID: ");
+						intInput = sc.nextInt();
 						sc.nextLine();
-						strike.setTradeUnionID(tradeUnion);
+						strike.setTradeUnionID(intInput);
 						
 						System.out.println("Enter Work Area: ");
-						String workArea = sc.nextLine();
-						strike.setWorkArea(workArea);
+						strInput = sc.nextLine();
+						strike.setWorkArea(strInput);
 						
 						System.out.println("Enter Capacity:");
-						int capacity = sc.nextInt();
+						intInput = sc.nextInt();
 						sc.nextLine();
-						strike.setCapacity(capacity);
+						strike.setCapacity(intInput);
 						
-						q.create(strike);
+						String tableVal = "strikes(dateOfStrike, location, leaderID, tradeUnion, workArea, capacity)";
 						
+						q.create(tableVal, strike);
+			
 						break;
 						
 					case 2: 
+						TradeUnions tradeUnion = new TradeUnions();
+						
+						System.out.println("Enter Full Name:/n");
+						String name = sc.nextLine();
+						tradeUnion.setFullName(name);
+						
+						System.out.println("Enter Abreviated Name:/n");
+					
+						System.out.println("Enter Number of Members:/n");
+						
+						System.out.println("Enter Year Established:/n");
+						
+						
+						
+						
+						
+						
 					}
 				
 				case "read":
-					System.out.println("read file");
-					q.view();
+					System.out.println("Select table to add to");
+					System.out.println("1. Strikes");
+					System.out.println("2. Trade Unions");
+					System.out.println("3. Leaders");
+					int input = sc.nextInt();
+					sc.nextLine();
+					
+					
+					q.view(input);
 					break;
 				
 				case "update":
@@ -98,12 +124,6 @@ public class Choices {
 					sc.nextLine();
 					
 					q.delete(id);
-					break;
-					
-				case "search id":
-					System.out.println("Enter id of record to view:");
-					int id2 = sc.nextInt();
-					sc.nextLine();
 					break;
 					
 				default: 

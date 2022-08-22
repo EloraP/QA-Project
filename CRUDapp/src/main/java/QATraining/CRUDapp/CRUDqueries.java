@@ -74,7 +74,15 @@ public class CRUDqueries {
 	}
 	
 	public void delete(int id) {
-		System.out.println("delete " + id);
+		String del = "DELETE FROM strikes WHERE id = " + id;
+		
+		try {
+			stmt.executeUpdate(del);
+			System.out.println("Delete statement executed");
+		} catch (SQLException e) {
+			System.out.println("Bad query");
+			e.printStackTrace();
+		}
 	}
 	
 	public void close() {

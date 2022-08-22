@@ -39,7 +39,25 @@ public class CRUDqueries {
 	}
 	
 	public void view() {
-		System.out.println("view all database");
+		String read = "SELECT * FROM strikes";
+		
+		try {
+			rs = stmt.executeQuery(read);
+			while (rs.next()) {
+				System.out.println("ID: " + rs.getInt("id"));
+				System.out.println("Date: " + rs.getString("dateOfStrike"));
+				System.out.println("Location: " + rs.getString("location"));
+				System.out.println("Leader: " + rs.getString("leader"));
+				System.out.println("Trade Union: " + rs.getString("tradeUnion"));
+				System.out.println("Work Area: " + rs.getString("workArea"));
+				System.out.println("Capacity: " + rs.getInt("capacity"));
+				System.out.println();
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Bad query");
+			e.printStackTrace();
+		}
 	}
 	
 	public void update(int id, String value, String feature) {

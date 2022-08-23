@@ -6,7 +6,6 @@ public class Strike {
 	private int id; 
 	private String dateOfStrike;
 	private String location;
-	private int leaderID;
 	private int tradeUnionID;
 	private String workArea;
 	private int capacity;
@@ -34,13 +33,7 @@ public class Strike {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	
-	public int getLeader() {
-		return leaderID;
-	}
-	public void setLeaderID(int leaderID) {
-		this.leaderID = leaderID;
-	}
+
 	
 	public int getTradeUnionID() {
 		return tradeUnionID;

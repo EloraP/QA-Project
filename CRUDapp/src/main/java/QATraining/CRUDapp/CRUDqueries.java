@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class CRUDqueries {
 	
@@ -23,22 +25,163 @@ public class CRUDqueries {
 		}
 	}
 	
-	public Strike create(String table, Object s) {
-		String create = "INSERT INTO " + table + " " 
-				+ "VALUES ('" + ((Strike) s).getDateOfStrike() + "', '" + ((Strike) s).getLocation() + "', '" 
-				+ ((Strike) s).getLeader() + "', '" + ((Strike) s).getTradeUnionID() + "', '" + ((Strike) s).getWorkArea() + "', " 
-				+ ((Strike) s).getCapacity() + ");";
+	public Object create(String table, Object s) {
+		String create = ""; 
+		
+		switch(table) {
+			case "s":
+				
+				create = "INSERT INTO strikes(dateOfStrike, location, tradeUnionID, workArea, capacity) " 
+						+ "VALUES ('" + ((Strike) s).getDateOfStrike() + "', '" + ((Strike) s).getLocation() + "', '" 
+						+ ((Strike) s).getTradeUnionID() + "', '" + ((Strike) s).getWorkArea() + "', " 
+						+ ((Strike) s).getCapacity() + ");";
+				
+				
+				
+				break;
+				
+			case "t":
+				create = "INSERT INTO tradeUnions(fullName, TUName, numberOfMembers, established) " 
+						+ "VALUES ('" + ((TradeUnions) s).getFullName() + "', '" + ((TradeUnions) s).getName()
+						+ "', " + ((TradeUnions) s).getNumberOfMembers() + ", " + ((TradeUnions) s).getYear() + ");";
+				break;
+			
+			case "l":
+				create = "INSERT INTO leaders(leaderName, age, yearsOfExperience, tradeUnionID) " 
+						+ "VALUES ('" + ((Leaders) s).getLeaderName() + "', " + ((Leaders) s).getAge() + ", "
+						+ ((Leaders) s).getYearsOfExperience() + ", " + ((Leaders) s).getTradeUnionId() + ");";
+				break;
+				
+				
+		}
 		
 		try {
 			stmt.executeUpdate(create);
 			System.out.println("Create statement executed");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
+			
+			
+			try {
+				
+				if(table.equals("s")) {
+					rs = stmt.executeQuery("SELECT * FROM tradeUnions WHERE id = " + ((Strike)s).getTradeUnionID() + ";");
+					if(!rs.next()) {
+						
+						System.out.println("No Trade Union with id " + ((Strike)s).getTradeUnionID() + ". Create Trade Union? (Enter y or n)");
+						Scanner sc = new Scanner(System.in);
+						if(sc.nextLine().equals("y")) {
+	
+							Choices c = new Choices();
+							TradeUnions tu = new TradeUnions();
+							c.createWithId(2, ((Strike)s).getTradeUnionID(), tu);
+							create(table, s);
+						}
+						else {
+							System.out.println("Enter new id?");
+							if(sc.nextLine().equals("y")) {
+								System.out.println("Enter new id:");
+								int newId = sc.nextInt();
+								sc.nextLine();
+								((Strike)s).setTradeUnionID(newId);
+								create(table, s);
+							}
+						}
+						
+						
+						
+					}
+					
+					
+				}else if(table.equals("l")) {
+					
+					rs = stmt.executeQuery("SELECT * FROM tradeUnions WHERE id = " + ((Leaders)s).getTradeUnionId() + ";");
+					if(!rs.next()) {
+						
+						System.out.println("No Trade Union with id " + ((Leaders)s).getTradeUnionId() + ". Create Trade Union? (Enter y or n)");
+						Scanner sc = new Scanner(System.in);
+						if(sc.nextLine().equals("y")) {
+	
+							Choices c = new Choices();
+							TradeUnions tu = new TradeUnions();
+							c.createWithId(2, ((Leaders)s).getTradeUnionId(), tu);
+							create(table, s);
+						}
+						else {
+							System.out.println("Enter new id?");
+							if(sc.nextLine().equals("y")) {
+								System.out.println("Enter new id:");
+								int newId = sc.nextInt();
+								sc.nextLine();
+								((Leaders)s).setTradeUnionId(newId);
+								create(table, s);
+							}
+						}
+						
+					}
+					
+				}
+				
+				
+				
+
+			}
+			
+			catch (SQLException ev1) {
+				System.out.println("Bad Query");
+			}
+		}
+		
+		return  s;
+	}
+	
+	public Object createWithID(String table, Object s) {
+		
+		String create = ""; 
+		
+		switch(table) {
+			case "s":
+				create = "INSERT INTO strikes(id, dateOfStrike, location, tradeUnionID, workArea, capacity) " 
+						+ "VALUES (" + ((Strike)s).getId() + ", '" + ((Strike) s).getDateOfStrike() + "', '" + ((Strike) s).getLocation() + "', '" 
+						+ "', '" + ((Strike) s).getTradeUnionID() + "', '" + ((Strike) s).getWorkArea() + "', " 
+						+ ((Strike) s).getCapacity() + ");";
+				
+				break;
+				
+			case "t":
+				create = "INSERT INTO tradeUnions(id, fullName, TUName, numberOfMembers, established) " 
+						+ "VALUES (" + ((TradeUnions) s).getId() + ", '" + ((TradeUnions) s).getFullName() + "', '" + ((TradeUnions) s).getName()
+						+ "', " + ((TradeUnions) s).getNumberOfMembers() + ", " + ((TradeUnions) s).getYear() + ");";
+				break;
+			
+			case "l":
+				System.out.println(((Leaders)s).getTradeUnionId());
+				create = "INSERT INTO leaders(id, leaderName, age, yearsOfExperience, tradeUnionID) " 
+						+ "VALUES (" + ((Leaders) s).getId() + ", '" + ((Leaders) s).getLeaderName() + "', " + ((Leaders) s).getAge() + ", "
+						+ ((Leaders) s).getYearsOfExperience() + ", " + ((Leaders) s).getTradeUnionId() + ");";
+				break;
+				
+				
+		}
+		
+		try {
+			
+			stmt.executeUpdate(create);
+			
+			System.out.println("Create statement executed");
+		} catch(SQLIntegrityConstraintViolationException e) {
+			
+			System.out.println(e);
+			
+		}
+		catch (SQLException e) {
 			System.out.println("Bad query");
 			e.printStackTrace();
 		}
 		
-		return (Strike) s;
+		return  s;
 	}
+	
 	
 	public void view(int table) {
 		
@@ -52,7 +195,6 @@ public class CRUDqueries {
 					System.out.println("ID: " + rs.getInt("id"));
 					System.out.println("Date: " + rs.getString("dateOfStrike"));
 					System.out.println("Location: " + rs.getString("location"));
-					System.out.println("Leader ID: " + rs.getString("leaderID"));
 					System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
 					System.out.println("Work Area: " + rs.getString("workArea"));
 					System.out.println("Capacity: " + rs.getInt("capacity"));
@@ -84,6 +226,7 @@ public class CRUDqueries {
 			}
 			
 		}else if(table == 3) {
+			
 			read = "SELECT * FROM leaders";
 			
 			try {
@@ -107,8 +250,23 @@ public class CRUDqueries {
 		
 	}
 	
-	public void update(int id, String value, String feature) {
-		String update = "UPDATE strikes SET " + feature + " = '" + value + "' WHERE id = " + id + ";";
+	public void update(int table, int id, String value, String feature) {
+		String tableName = "";
+		
+		switch(table) {
+		case 1:
+			tableName = "strikes";
+			break;
+		case 2:
+			tableName = "tradeUnions";
+			break;
+		case 3:
+			tableName = "leaders";
+			break;
+		}
+		String update = "UPDATE " + tableName + " SET " + feature + " = '" + value + "' WHERE id = " + id + ";";
+		
+	
 		
 		try {
 			stmt.executeUpdate(update);
@@ -120,8 +278,19 @@ public class CRUDqueries {
 		}
 	}
 	
-	public void delete(int id) {
-		String del = "DELETE FROM strikes WHERE id = " + id;
+	public void delete(int id, int table) {
+		String del = new String();
+		
+		switch(table){
+		case 1:
+			del = "DELETE FROM strikes WHERE id = " + id;
+			break;
+		case 2: 
+			del = "DELETE FROM tradeUnions WHERE id = " + id;
+			break;
+		case 3:
+			del = "DELETE FROM leaders WHERE id = " + id;
+		}
 		
 		try {
 			stmt.executeUpdate(del);

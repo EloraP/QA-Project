@@ -37,8 +37,6 @@ public class CRUDqueries {
 						+ ((Strike) s).getTradeUnionID() + "', '" + ((Strike) s).getWorkArea() + "', " 
 						+ ((Strike) s).getCapacity() + ");";
 				
-				
-				
 				break;
 				
 			case "t":
@@ -53,7 +51,6 @@ public class CRUDqueries {
 						+ ((Leaders) s).getYearsOfExperience() + ", " + ((Leaders) s).getTradeUnionId() + ");";
 				break;
 				
-				
 		}
 		
 		try {
@@ -61,7 +58,6 @@ public class CRUDqueries {
 			System.out.println("Create statement executed");
 		}
 		catch (SQLException e) {
-			
 			
 			try {
 				
@@ -88,8 +84,6 @@ public class CRUDqueries {
 								create(table, s);
 							}
 						}
-						
-						
 						
 					}
 					
@@ -268,11 +262,11 @@ public class CRUDqueries {
 			tableName = "leaders";
 			break;
 		}
+		
 		String update = "UPDATE " + tableName + " SET " + feature + " = '" + value + "' WHERE id = " + id + ";";
 		
-	
-		
 		try {
+			
 			stmt.executeUpdate(update);
 			System.out.println("Update statement executed");
 			
@@ -298,10 +292,7 @@ public class CRUDqueries {
 						if(sc.nextLine().equals("y")) {
 							System.out.println("Enter new id:");
 							String newVal = sc.nextLine();
-							System.out.println(table);
-							System.out.println(id);
-							System.out.println(newVal);
-							System.out.println(feature);
+							
 							update(table, id, newVal, feature);
 						}
 					}
@@ -312,7 +303,6 @@ public class CRUDqueries {
 				
 				
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				System.out.println("Bad Query");
 				e1.printStackTrace();
 			}

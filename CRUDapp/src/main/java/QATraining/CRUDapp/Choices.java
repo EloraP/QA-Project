@@ -150,15 +150,11 @@ public class Choices {
 							feature = "tradeUnionID";
 							break;
 						}
-						System.out.println(feature);
+						
 						System.out.println("Enter the new value:");
 						value = sc.nextLine();
 						break;
 					}
-//					System.out.println(table);
-//					System.out.println(uid);
-//					System.out.println(value);
-					System.out.println(feature);
 					
 					q.update(table, uid, value,  feature);
 					
@@ -320,9 +316,6 @@ public class Choices {
 	}
 	
 public Object createWithId(int choice, int nid, Object o) {
-	//Scanner sc = new Scanner(System.in);
-	
-	System.out.println("here");
 		
 		switch(choice) {
 		
@@ -429,8 +422,6 @@ public Object createWithId(int choice, int nid, Object o) {
 				
 			}
 			
-			
-			
 			q.createWithID("l", leader);
 			return leader;
 		
@@ -438,9 +429,7 @@ public Object createWithId(int choice, int nid, Object o) {
 		
 		System.out.println("Invalid Choice");
 		return null;
-		
 	}
-		
 }
 
 

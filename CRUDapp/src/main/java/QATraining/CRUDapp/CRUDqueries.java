@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+//import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -202,6 +203,7 @@ public class CRUDqueries {
 				}
 
 			} catch (SQLException e) {
+				
 				System.out.println("Bad query");
 				e.printStackTrace();
 			}
@@ -220,10 +222,12 @@ public class CRUDqueries {
 					System.out.println();
 				}
 
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
+				
 				System.out.println("Bad query");
 				e.printStackTrace();
-			}
+			} 
 			
 		}else if(table == 3) {
 			
@@ -273,8 +277,46 @@ public class CRUDqueries {
 			System.out.println("Update statement executed");
 			
 		}catch (SQLException e) {
-			System.out.println("Bad query");
-			e.printStackTrace();
+			try {
+				rs = stmt.executeQuery("SELECT * FROM tradeUnions WHERE id = " + value + ";");
+				
+				if(!rs.next()) {
+					
+					System.out.println("No Trade Union with id " + value + ". Create Trade Union? (Enter y or n)");
+					Scanner sc = new Scanner(System.in);
+					if(sc.nextLine().equals("y")) {
+
+						Choices c = new Choices();
+						TradeUnions tu = new TradeUnions();
+						int newInt = Integer.valueOf(value);
+
+						c.createWithId(2, newInt, tu);
+						update(table, id, value, feature);
+					}
+					else {
+						System.out.println("Enter new id?");
+						if(sc.nextLine().equals("y")) {
+							System.out.println("Enter new id:");
+							String newVal = sc.nextLine();
+							System.out.println(table);
+							System.out.println(id);
+							System.out.println(newVal);
+							System.out.println(feature);
+							update(table, id, newVal, feature);
+						}
+					}
+					
+				
+				}
+				
+				
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("Bad Query");
+				e1.printStackTrace();
+			}
+			
 		}
 	}
 	

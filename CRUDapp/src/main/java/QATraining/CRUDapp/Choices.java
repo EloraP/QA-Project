@@ -83,7 +83,7 @@ public class Choices {
 							feature = "location";
 							break;
 						case 3:
-							feature = "tradeUnion";
+							feature = "tradeUnionID";
 							break;
 						case 4: 
 							feature = "workArea";
@@ -105,6 +105,8 @@ public class Choices {
 						System.out.println("4. Year Established");
 						System.out.println("5. Capacity");
 						
+						featureID = sc.nextInt();
+						sc.nextLine();
 						sc.nextLine();
 						switch(featureID) {
 						case 1: 
@@ -132,6 +134,7 @@ public class Choices {
 						System.out.println("3. Years of Experience");
 						System.out.println("4. Trade Union ID");
 						
+						featureID = sc.nextInt();
 						sc.nextLine();
 						switch(featureID) {
 						case 1: 
@@ -147,11 +150,15 @@ public class Choices {
 							feature = "tradeUnionID";
 							break;
 						}
-						
+						System.out.println(feature);
 						System.out.println("Enter the new value:");
 						value = sc.nextLine();
 						break;
 					}
+//					System.out.println(table);
+//					System.out.println(uid);
+//					System.out.println(value);
+					System.out.println(feature);
 					
 					q.update(table, uid, value,  feature);
 					

@@ -94,16 +94,64 @@ public class Choices {
 						}
 						
 						
-						System.out.println("Enter the new " + feature + " of the strike: ");
+						System.out.println("Enter the new value: ");
 						value = sc.nextLine();
 						break;
 					case 2:
+						System.out.println("Enter feature to update:");
+						System.out.println("1. Full Name");
+						System.out.println("2. Abreviated Name");
+						System.out.println("3. Number of Members");
+						System.out.println("4. Year Established");
+						System.out.println("5. Capacity");
+						
+						sc.nextLine();
+						switch(featureID) {
+						case 1: 
+							feature = "fullName";
+							break;
+						case 2:
+							feature = "TUName";
+							break;
+						case 3:
+							feature = "numbersOfMembers";
+							break;
+						case 4: 
+							feature = "established";
+							break;
+						}
+						
+						System.out.println("Enter the new value:");
+						value = sc.nextLine();
+						
 						break;
 					case 3:
+						System.out.println("Enter feature to update:");
+						System.out.println("1. Leader's Name");
+						System.out.println("2. Age");
+						System.out.println("3. Years of Experience");
+						System.out.println("4. Trade Union ID");
+						
+						sc.nextLine();
+						switch(featureID) {
+						case 1: 
+							feature = "leaderName";
+							break;
+						case 2:
+							feature = "age";
+							break;
+						case 3:
+							feature = "yearsOfExperience";
+							break;
+						case 4: 
+							feature = "tradeUnionID";
+							break;
+						}
+						
+						System.out.println("Enter the new value:");
+						value = sc.nextLine();
 						break;
 					}
-					
-					
 					
 					q.update(table, uid, value,  feature);
 					

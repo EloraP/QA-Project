@@ -2,12 +2,22 @@ package QATraining.CRUDapp;
 
 public class Strike {
 	
+	
+	private int id; 
 	private String dateOfStrike;
 	private String location;
-	private String leader;
-	private String tradeUnion;
+	private int tradeUnionID;
 	private String workArea;
 	private int capacity;
+	
+
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getDateOfStrike() {
 		return dateOfStrike;
@@ -24,20 +34,14 @@ public class Strike {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
 	
-	public String getLeader() {
-		return leader;
-	}
-	public void setLeader(String leader) {
-		this.leader = leader;
+	public int getTradeUnionID() {
+		return tradeUnionID;
 	}
 	
-	public String getTradeUnion() {
-		return tradeUnion;
-	}
-	
-	public void setTradeUnion(String tradeUnion) {
-		this.tradeUnion = tradeUnion;
+	public void setTradeUnionID(int tradeUnionID) {
+		this.tradeUnionID = tradeUnionID;
 	}
 	
 	public String getWorkArea() {

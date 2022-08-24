@@ -15,16 +15,33 @@ import static org.hamcrest.CoreMatchers.*;
  * Unit test for simple App.
  */
 
+	
 
 public class AppTest 
 {
 	
 	private CRUDqueries q = new CRUDqueries();
+	private Choices c = new Choices();
+	
+	
+	@Test 
+	public void endCon() {
+		String test = c.endConn("n");
+		String exp = "quit";
+		
+		assertEquals(test, exp);	
+	}
     
-
+	@Test
+	public void badView() {
+		ArrayList<Object> test = new ArrayList<Object>();
+		ArrayList<Object> expected = null;
+		test = q.view(200);		
+		assertEquals(test, expected);	
+	}
     
     @Test
-    public void checkViewStrikes() throws Exception{
+    public void viewStrikes() throws Exception{
     	boolean check = true;
     	Strike s1 = new Strike();
     	Strike s2 = new Strike();
@@ -47,8 +64,9 @@ public class AppTest
     	s2.setWorkArea("Catering");
     	s2.setCapacity(1000);
     	
-    	list.add(s2);
     	list.add(s1);
+    	list.add(s2);
+    	
     	testList = q.view(1);
     	
     	Strike n = (Strike) list.get(0);
@@ -68,7 +86,7 @@ public class AppTest
     }
     
     @Test
-    public void checkViewLeaders() {
+    public void viewLeaders() {
     	boolean check = true;
     	Leaders l1 = new Leaders();
     	Leaders l2 = new Leaders();
@@ -87,8 +105,8 @@ public class AppTest
     	l2.setYearsOfExperience(5);
     	l2.setTradeUnionId(3);
     	
-    	list.add(l2);
     	list.add(l1);
+    	list.add(l2);
     	
     	testList = q.view(3);
     	
@@ -99,15 +117,16 @@ public class AppTest
     	
     	n = (Leaders) list.get(1);
     	t = (Leaders) testList.get(1);
+    	
+    	check = checkLeaders(n, t);
 	    
 	    assertTrue(check);
     	
     	
     }
     
-    
     @Test
-    public void checkViewTradeUnions() {
+    public void viewTradeUnions() {
     	boolean check = true;
     	TradeUnions t1 = new TradeUnions();
     	TradeUnions t2 = new TradeUnions();
@@ -134,6 +153,8 @@ public class AppTest
     	t3.setNumberOfMembers(201900);
     	t3.setYear(1995);
     	
+    	list.add(t1);
+    	list.add(t2);
     	list.add(t3);
     	
     	testList = q.view(2);
@@ -143,13 +164,20 @@ public class AppTest
     	
     	check = checkTradeUnions(n, t);
     	
+    	n = (TradeUnions) list.get(1);
+    	t = (TradeUnions) testList.get(1);
+    	check = checkTradeUnions(n, t);
+    	
+    	n = (TradeUnions) list.get(2);
+    	t = (TradeUnions) testList.get(2);
+    	check = checkTradeUnions(n, t);
 
 	    
 	    assertTrue(check);
     }
     
     @Test
-    public void checkCreatesStrike() {
+    public void createsStrike() {
     	Strike s = new Strike();
     	
     	s.setDateOfStrike("2023-01-01 13:00:00");
@@ -181,7 +209,38 @@ public class AppTest
     }
    
     @Test
-    public void checkCreateTradeUnion() {
+    public void badCreates() {
+    	Strike s = new Strike();
+    	
+    	s.setDateOfStrike("2023-01-01 13:00:00");
+    	s.setLocation("Southwold, Suffolk");
+    	s.setTradeUnionID(700);
+    	s.setWorkArea("IT Sector");
+    	s.setCapacity(400);
+    		
+    	boolean check = true;
+    	Strike test;
+    	
+    	try {
+           	test = (Strike) q.create("s", s);
+           	
+           	//check if the object is != null
+            assertNotNull(test); 
+            
+            check = checkStrikes(s, test);
+
+        } catch(Exception e){
+            // let the test fail, if your function throws an Exception.
+            fail("got Exception, i want an Expression");
+         }
+    	
+    	
+    	
+    	assertTrue(!check);
+    }
+    
+    @Test
+    public void createTradeUnion() {
     	TradeUnions t = new TradeUnions();
     	
     	t.setFullName("New Trade Union");
@@ -213,7 +272,7 @@ public class AppTest
     }
     
     @Test
-    public void checkCreateLeaders() {
+    public void createLeaders() {
     	Leaders l = new Leaders();
     
     	l.setLeaderName("Michael Lynch");
@@ -242,9 +301,8 @@ public class AppTest
     	
     }
     
-    
     @Test
-    public void checkUpdate() {
+    public void updateStrike() {
     	
     	String test = q.update(1, 1, "2023-05-09 15:00:00", "dateOfStrike");
     	
@@ -256,7 +314,35 @@ public class AppTest
     }
     
     @Test
-    public void checkDelete() {
+    public void updateTU() {
+    	String test = q.update(2, 1, "test", "fullName");
+    	String expected = "Table: 2ID: 1Value: test";
+    	
+    	q.update(2, 1, "National Union of Rail, Maritime and Transport Workers", "fullName");
+    	assertEquals(test, expected);
+    }
+    
+    @Test
+    public void updateLeaders() {
+    	String test = q.update(3, 1, "test", "leaderName");
+    	String expected = "Table: 3ID: 1Value: test";
+    	
+    	q.update(3, 1, "Harry Gairn", "leaderName");
+    	assertEquals(test, expected);	
+    	
+    }
+    
+    @Test
+    public void badUpdate() {
+    	String test = q.update(5, 5, "test", "test");
+    	String expected = "bad query";
+    	
+    	assertEquals(test, expected);	
+    	
+    }
+    
+    @Test
+    public void deleteStrike() {
     	String test = q.delete(1,  1);
     	String exp = "Table: 1ID: 1";
     	
@@ -272,8 +358,49 @@ public class AppTest
     	q.createWithID("s", s);
     	
     	assertEquals(test, exp);
+    	
+    	
+    	
+    	
     }
-
+    
+    @Test
+    public void deleteTU() {
+    	String test = q.delete(1,  2);
+    	String exp = "Table: 2ID: 1";
+    	
+    	TradeUnions t1 = new TradeUnions();
+    	
+    	t1.setId(1);
+    	t1.setFullName("National Union of Rail, Maritime and Transport Workers");
+    	t1.setName("RMT");
+    	t1.setNumberOfMembers(80000);
+    	t1.setYear(1990);
+    	
+    	q.createWithID("t", t1);
+    	
+    	assertEquals(test, exp);
+    }
+    
+    @Test
+    public void deleteLeader() {
+    	String test = q.delete(1,  3);
+    	String exp = "Table: 3ID: 1";
+    	
+    	Leaders l1 = new Leaders();
+    	l1.setId(1);
+    	l1.setLeaderName("Harry Gairn");
+    	l1.setAge(22);
+    	l1.setYearsOfExperience(10);
+    	l1.setTradeUnionId(2);
+    	
+    	q.createWithID("l", l1);
+    	
+    	assertEquals(test, exp);
+    	
+    }
+    
+    @Test
     public void badDelete() {
     	String test = q.delete(500,  500);
     	String exp = "bad query";
@@ -282,10 +409,22 @@ public class AppTest
     	
     }
     
-    public void deleteWhere() {
+    @Test
+    public void badDeleteWhere() {
+    	String test = q.deleteWhere("test", "test", "test");
+    	String exp = "bad query";
     	
+    	assertEquals(test, exp);
     }
     
+    @Test
+    public void close() {
+    	String test = q.close();
+    	String exp = "closing";
+    	
+    	assertEquals(test, exp);
+    	
+    }
     
     public boolean checkStrikes(Strike s, Strike test) {
     	boolean check = true;

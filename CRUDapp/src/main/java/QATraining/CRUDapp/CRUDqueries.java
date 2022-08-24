@@ -102,6 +102,7 @@ public class CRUDqueries {
 							TradeUnions tu = new TradeUnions();
 							c.createWithId(2, ((Leaders)s).getTradeUnionId(), tu);
 							create(table, s);
+							return s;
 						}
 						else {
 							System.out.println("Enter new id?");
@@ -111,16 +112,13 @@ public class CRUDqueries {
 								sc.nextLine();
 								((Leaders)s).setTradeUnionId(newId);
 								create(table, s);
+								return s;
 							}
 						}
 						
 					}
 					
 				}
-				
-				
-				
-
 			}
 			
 			catch (SQLException ev1) {
@@ -216,6 +214,7 @@ public class CRUDqueries {
 				
 				System.out.println("Bad query");
 				e.printStackTrace();
+				return null;
 			}
 			
 		}else if(table == 2) {
@@ -256,6 +255,7 @@ public class CRUDqueries {
 				
 				System.out.println("Bad query");
 				e.printStackTrace();
+				return null;
 			} 
 			
 		}else if(table == 3) {
@@ -285,6 +285,7 @@ public class CRUDqueries {
 			} catch (SQLException e) {
 				System.out.println("Bad query");
 				e.printStackTrace();
+				return null;
 			}
 			
 		}
@@ -317,7 +318,6 @@ public class CRUDqueries {
 			
 			stmt.executeUpdate(update);
 			System.out.println("Update statement executed");
-			System.out.println("Table: " + table + "ID: " + id + "Value: " + value);
 			return "Table: " + table + "ID: " + id + "Value: " + value;
 			
 		}catch (SQLException e) {
@@ -326,7 +326,7 @@ public class CRUDqueries {
 				
 				if(!rs.next()) {
 					
-					System.out.println("No " + tableName + " with id " + value + ".");
+					System.out.println("No table with id " + value + ".");
 					
 					
 				
@@ -337,6 +337,7 @@ public class CRUDqueries {
 			} catch (SQLException e1) {
 				System.out.println("Bad Query");
 				e1.printStackTrace();
+				return "bad query";
 			}
 			
 		}
@@ -390,13 +391,16 @@ public class CRUDqueries {
 		
 	}
 	
-	public void close() {
+	public String close() {
 		try {
 			conn.close();
 			System.out.println("Closed!");
+			return "closing";
+			
 		} catch (SQLException e) {
 			System.out.println("Closing connection...");
 			e.printStackTrace();
+			return "closing";
 		}
 		
 	}

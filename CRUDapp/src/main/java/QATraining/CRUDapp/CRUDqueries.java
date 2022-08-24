@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 //import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CRUDqueries {
@@ -56,6 +57,7 @@ public class CRUDqueries {
 		try {
 			stmt.executeUpdate(create);
 			System.out.println("Create statement executed");
+			return s;
 		}
 		catch (SQLException e) {
 			
@@ -127,7 +129,7 @@ public class CRUDqueries {
 			}
 		}
 		
-		return  s;
+		return  null;
 	}
 	
 	public Object createWithID(String table, Object s) {
@@ -164,6 +166,7 @@ public class CRUDqueries {
 			stmt.executeUpdate(create);
 			
 			System.out.println("Create statement executed");
+			return s;
 		} catch(SQLIntegrityConstraintViolationException e) {
 			
 			System.out.println(e);
@@ -174,27 +177,38 @@ public class CRUDqueries {
 			e.printStackTrace();
 		}
 		
-		return  s;
+		return  null;
 	}
 	
-	
-	public void view(int table) {
+	public ArrayList<Object> view(int table) {
+		ArrayList<Object> list = new ArrayList<Object>();
 		
 		String read;
 		if(table == 1) {
 			read = "SELECT * FROM strikes";
+			Strike strike = new Strike();
 			
 			try {
 				rs = stmt.executeQuery(read);
 				while (rs.next()) {
 					System.out.println("ID: " + rs.getInt("id"));
+					strike.setId(rs.getInt("id"));
 					System.out.println("Date: " + rs.getString("dateOfStrike"));
+					strike.setDateOfStrike(rs.getString("dateOfStrike"));
 					System.out.println("Location: " + rs.getString("location"));
+					strike.setLocation(rs.getString("location"));
 					System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
+					strike.setTradeUnionID(rs.getInt("tradeUnionID"));
 					System.out.println("Work Area: " + rs.getString("workArea"));
+					strike.setWorkArea(rs.getString("workarea"));
 					System.out.println("Capacity: " + rs.getInt("capacity"));
+					strike.setCapacity(rs.getInt("capacity"));
+					
+					list.add(strike);
+					
 					System.out.println();
 				}
+				return list;
 
 			} catch (SQLException e) {
 				
@@ -204,17 +218,27 @@ public class CRUDqueries {
 			
 		}else if(table == 2) {
 			read = "SELECT * FROM tradeUnions";
+			TradeUnions tu = new TradeUnions();
 			
 			try {
 				rs = stmt.executeQuery(read);
 				while (rs.next()) {
 					System.out.println("ID: " + rs.getInt("id"));
+					tu.setId(rs.getInt("id"));
 					System.out.println("Full Name: " + rs.getString("fullName"));
+					tu.setFullName(rs.getString("fullName"));
 					System.out.println("Abreviated Name: " + rs.getString("TUName"));
+					tu.setName(rs.getString("TUName"));
 					System.out.println("Number of Members: " + rs.getInt("numberOfMembers"));
+					tu.setNumberOfMembers(rs.getInt("numberOfMembers"));
 					System.out.println("Year: " + rs.getInt("established"));
+					tu.setYear(rs.getInt("established"));
+					
+					list.add(tu);
+					
 					System.out.println();
 				}
+				return list;
 
 			}
 			catch (SQLException e) {
@@ -226,17 +250,26 @@ public class CRUDqueries {
 		}else if(table == 3) {
 			
 			read = "SELECT * FROM leaders";
+			Leaders l = new Leaders();
 			
 			try {
 				rs = stmt.executeQuery(read);
 				while (rs.next()) {
 					System.out.println("ID: " + rs.getInt("id"));
+					l.setId(rs.getInt("id"));
 					System.out.println("Leader Name: " + rs.getString("leaderName"));
+					l.setLeaderName(rs.getString("leaderName"));
 					System.out.println("Age: " + rs.getInt("age"));
+					l.setAge(rs.getInt("age"));
 					System.out.println("Years of Experience: " + rs.getInt("yearsOfExperience"));
+					l.setYearsOfExperience(rs.getInt("yearsOfExperience"));
 					System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
+					l.setTradeUnionId(rs.getInt("tradeUnionID"));
+					
+					list.add(l);
 					System.out.println();
 				}
+				return list;
 
 			} catch (SQLException e) {
 				System.out.println("Bad query");
@@ -246,9 +279,11 @@ public class CRUDqueries {
 		}
 		
 		
+		return null;
+		
 	}
 	
-	public void update(int table, int id, String value, String feature) {
+	public String update(int table, int id, String value, String feature) {
 		String tableName = "";
 		
 		switch(table) {
@@ -308,9 +343,11 @@ public class CRUDqueries {
 			}
 			
 		}
+		
+		return "Table: " + table + "ID: " + id + "Value: " + value;
 	}
 	
-	public void delete(int id, int table) {
+	public String delete(int id, int table) {
 		String del = new String();
 		
 		switch(table){
@@ -331,6 +368,8 @@ public class CRUDqueries {
 			System.out.println("Bad query");
 			e.printStackTrace();
 		}
+		
+		return "Table: " + table + "ID: " + id;
 	}
 	
 	public void close() {
@@ -341,6 +380,7 @@ public class CRUDqueries {
 			System.out.println("Closing connection...");
 			e.printStackTrace();
 		}
+		
 	}
-
+	
 }

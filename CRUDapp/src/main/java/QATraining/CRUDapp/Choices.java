@@ -15,7 +15,7 @@ public class Choices {
 	
 	public void options() {
 		
-		CRUDqueries q = new CRUDqueries();
+		//CRUDqueries q = new CRUDqueries();
 		
 		String crud = getInput();
 		
@@ -315,7 +315,7 @@ public class Choices {
 		
 	}
 	
-public Object createWithId(int choice, int nid, Object o) {
+	public Object createWithId(int choice, int nid, Object o) {
 		
 		switch(choice) {
 		

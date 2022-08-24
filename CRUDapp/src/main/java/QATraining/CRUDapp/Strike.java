@@ -9,7 +9,8 @@ public class Strike {
 	private int tradeUnionID;
 	private String workArea;
 	private int capacity;
-	
+
+
 	public int getId() {
 		return id;
 	}

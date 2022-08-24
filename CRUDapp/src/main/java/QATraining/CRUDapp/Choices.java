@@ -15,7 +15,6 @@ public class Choices {
 	
 	public void options() {
 		
-		//CRUDqueries q = new CRUDqueries();
 		
 		String crud = getInput();
 		

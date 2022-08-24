@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-//import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -103,6 +102,7 @@ public class CRUDqueries {
 							TradeUnions tu = new TradeUnions();
 							c.createWithId(2, ((Leaders)s).getTradeUnionId(), tu);
 							create(table, s);
+							return s;
 						}
 						else {
 							System.out.println("Enter new id?");
@@ -112,16 +112,13 @@ public class CRUDqueries {
 								sc.nextLine();
 								((Leaders)s).setTradeUnionId(newId);
 								create(table, s);
+								return s;
 							}
 						}
 						
 					}
 					
 				}
-				
-				
-				
-
 			}
 			
 			catch (SQLException ev1) {
@@ -139,9 +136,11 @@ public class CRUDqueries {
 		switch(table) {
 			case "s":
 				create = "INSERT INTO strikes(id, dateOfStrike, location, tradeUnionID, workArea, capacity) " 
-						+ "VALUES (" + ((Strike)s).getId() + ", '" + ((Strike) s).getDateOfStrike() + "', '" + ((Strike) s).getLocation() + "', '" 
-						+ "', '" + ((Strike) s).getTradeUnionID() + "', '" + ((Strike) s).getWorkArea() + "', " 
+						+ "VALUES (" + ((Strike)s).getId() + ", '" + ((Strike) s).getDateOfStrike() + "', '" + ((Strike) s).getLocation() + "', " 
+						+ ((Strike) s).getTradeUnionID() + ", '" + ((Strike) s).getWorkArea() + "', " 
 						+ ((Strike) s).getCapacity() + ");";
+				
+			
 				
 				break;
 				
@@ -186,11 +185,12 @@ public class CRUDqueries {
 		String read;
 		if(table == 1) {
 			read = "SELECT * FROM strikes";
-			Strike strike = new Strike();
+			
 			
 			try {
 				rs = stmt.executeQuery(read);
 				while (rs.next()) {
+					Strike strike = new Strike();
 					System.out.println("ID: " + rs.getInt("id"));
 					strike.setId(rs.getInt("id"));
 					System.out.println("Date: " + rs.getString("dateOfStrike"));
@@ -214,6 +214,7 @@ public class CRUDqueries {
 				
 				System.out.println("Bad query");
 				e.printStackTrace();
+				return null;
 			}
 			
 		}else if(table == 2) {
@@ -234,10 +235,19 @@ public class CRUDqueries {
 					System.out.println("Year: " + rs.getInt("established"));
 					tu.setYear(rs.getInt("established"));
 					
-					list.add(tu);
+					list.add(tu);	
+					System.out.println(tu.getFullName());
 					
 					System.out.println();
 				}
+			
+				TradeUnions t1 = (TradeUnions) list.get(0);
+				TradeUnions t2 = (TradeUnions) list.get(1);
+				TradeUnions t3 = (TradeUnions) list.get(2);
+				
+				System.out.println(t1.getFullName());
+				System.out.println(t2.getFullName());
+				System.out.println(t3.getFullName());
 				return list;
 
 			}
@@ -245,6 +255,7 @@ public class CRUDqueries {
 				
 				System.out.println("Bad query");
 				e.printStackTrace();
+				return null;
 			} 
 			
 		}else if(table == 3) {
@@ -274,6 +285,7 @@ public class CRUDqueries {
 			} catch (SQLException e) {
 				System.out.println("Bad query");
 				e.printStackTrace();
+				return null;
 			}
 			
 		}
@@ -298,39 +310,24 @@ public class CRUDqueries {
 			break;
 		}
 		
+		
 		String update = "UPDATE " + tableName + " SET " + feature + " = '" + value + "' WHERE id = " + id + ";";
+		
 		
 		try {
 			
 			stmt.executeUpdate(update);
 			System.out.println("Update statement executed");
+			return "Table: " + table + "ID: " + id + "Value: " + value;
 			
 		}catch (SQLException e) {
 			try {
-				rs = stmt.executeQuery("SELECT * FROM tradeUnions WHERE id = " + value + ";");
+				rs = stmt.executeQuery("SELECT * FROM " + tableName + " WHERE id = " + value + ";");
 				
 				if(!rs.next()) {
 					
-					System.out.println("No Trade Union with id " + value + ". Create Trade Union? (Enter y or n)");
-					Scanner sc = new Scanner(System.in);
-					if(sc.nextLine().equals("y")) {
-
-						Choices c = new Choices();
-						TradeUnions tu = new TradeUnions();
-						int newInt = Integer.valueOf(value);
-
-						c.createWithId(2, newInt, tu);
-						update(table, id, value, feature);
-					}
-					else {
-						System.out.println("Enter new id?");
-						if(sc.nextLine().equals("y")) {
-							System.out.println("Enter new id:");
-							String newVal = sc.nextLine();
-							
-							update(table, id, newVal, feature);
-						}
-					}
+					System.out.println("No table with id " + value + ".");
+					
 					
 				
 				}
@@ -340,11 +337,12 @@ public class CRUDqueries {
 			} catch (SQLException e1) {
 				System.out.println("Bad Query");
 				e1.printStackTrace();
+				return "bad query";
 			}
 			
 		}
 		
-		return "Table: " + table + "ID: " + id + "Value: " + value;
+		return null;
 	}
 	
 	public String delete(int id, int table) {
@@ -364,21 +362,45 @@ public class CRUDqueries {
 		try {
 			stmt.executeUpdate(del);
 			System.out.println("Delete statement executed");
+			
 		} catch (SQLException e) {
 			System.out.println("Bad query");
 			e.printStackTrace();
+			return "bad query";
 		}
 		
 		return "Table: " + table + "ID: " + id;
+		
+		
+		
 	}
 	
-	public void close() {
+	public String deleteWhere(String value, String feature, String table) {
+		
+		String del = "DELETE FROM " + table + " WHERE " + feature + " = '" + value + "';";
+	
+		try {
+			stmt.executeUpdate(del);
+			System.out.println("Delete statement executed");
+			return del;
+		} catch (SQLException e) {
+			System.out.println("Bad query");
+			e.printStackTrace();
+			return "bad query";
+		}
+		
+	}
+	
+	public String close() {
 		try {
 			conn.close();
 			System.out.println("Closed!");
+			return "closing";
+			
 		} catch (SQLException e) {
 			System.out.println("Closing connection...");
 			e.printStackTrace();
+			return "closing";
 		}
 		
 	}

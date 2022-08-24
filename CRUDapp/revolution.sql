@@ -52,6 +52,9 @@ INSERT INTO strikes(dateOfStrike, location, tradeUnionID, workArea, capacity) VA
 INSERT INTO strikes(dateOfStrike, location, tradeUnionID, workArea, capacity) VALUES (
 '2023-01-16 19:00:00', 'Fort William, Scotland', 2, "Catering", 1000);
 
+SELECT * FROM strikes; 
+
+
 
 SELECT * FROM strikes;
 SELECT * FROM leaders;

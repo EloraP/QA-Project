@@ -91,6 +91,7 @@ public class CRUDqueries {
 					
 				}else if(table.equals("l")) {
 					
+					
 					rs = stmt.executeQuery("SELECT * FROM tradeUnions WHERE id = " + ((Leaders)s).getTradeUnionId() + ";");
 					if(!rs.next()) {
 						
@@ -236,18 +237,12 @@ public class CRUDqueries {
 					tu.setYear(rs.getInt("established"));
 					
 					list.add(tu);	
-					System.out.println(tu.getFullName());
+					
 					
 					System.out.println();
 				}
 			
-				TradeUnions t1 = (TradeUnions) list.get(0);
-				TradeUnions t2 = (TradeUnions) list.get(1);
-				TradeUnions t3 = (TradeUnions) list.get(2);
 				
-				System.out.println(t1.getFullName());
-				System.out.println(t2.getFullName());
-				System.out.println(t3.getFullName());
 				return list;
 
 			}
@@ -293,6 +288,118 @@ public class CRUDqueries {
 		
 		return null;
 		
+	}
+	
+	public ArrayList<Object> search(int table, String value, String feature) {
+		String read;
+		ArrayList<Object> list = new ArrayList<>();
+		
+		if(table == 1) {
+			read = "SELECT * FROM strikes WHERE " + feature + " = '" + value + "'";	
+			
+			Strike strike = new Strike();
+			
+			
+			try {
+				rs = stmt.executeQuery(read);
+				while (rs.next()) {
+					System.out.println("ID: " + rs.getInt("id"));
+					strike.setId(rs.getInt("id"));
+					System.out.println("Date: " + rs.getString("dateOfStrike"));
+					strike.setDateOfStrike(rs.getString("dateOfStrike"));
+					System.out.println("Location: " + rs.getString("location"));
+					strike.setLocation(rs.getString("location"));
+					System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
+					strike.setTradeUnionID(rs.getInt("tradeUnionID"));
+					System.out.println("Work Area: " + rs.getString("workArea"));
+					strike.setWorkArea(rs.getString("workarea"));
+					System.out.println("Capacity: " + rs.getInt("capacity"));
+					strike.setCapacity(rs.getInt("capacity"));
+					
+					list.add(strike);
+					
+					System.out.println();
+				}
+				return list;
+
+			} catch (SQLException e) {
+				
+				System.out.println("Bad query");
+				e.printStackTrace();
+				return null;
+			}
+			
+		}else if(table == 2) {
+			read = "SELECT * FROM tradeUnions WHERE " + feature + " = '" + value + "'";
+			TradeUnions tu = new TradeUnions();
+			
+			try {
+				rs = stmt.executeQuery(read);
+				while (rs.next()) {
+					System.out.println("ID: " + rs.getInt("id"));
+					tu.setId(rs.getInt("id"));
+					System.out.println("Full Name: " + rs.getString("fullName"));
+					tu.setFullName(rs.getString("fullName"));
+					System.out.println("Abreviated Name: " + rs.getString("TUName"));
+					tu.setName(rs.getString("TUName"));
+					System.out.println("Number of Members: " + rs.getInt("numberOfMembers"));
+					tu.setNumberOfMembers(rs.getInt("numberOfMembers"));
+					System.out.println("Year: " + rs.getInt("established"));
+					tu.setYear(rs.getInt("established"));
+					
+					list.add(tu);	
+					
+					
+					System.out.println();
+				}
+			
+				
+				return list;
+
+			}
+			catch (SQLException e) {
+				
+				System.out.println("Bad query");
+				e.printStackTrace();
+				return null;
+			} 
+			
+		}else if(table == 3) {
+			
+			read = "SELECT * FROM leaders WHERE " + feature + " = '" + value + "'";
+			
+			
+			Leaders l = new Leaders();
+			
+			try {
+				rs = stmt.executeQuery(read);
+				while (rs.next()) {
+					System.out.println("ID: " + rs.getInt("id"));
+					l.setId(rs.getInt("id"));
+					System.out.println("Leader Name: " + rs.getString("leaderName"));
+					l.setLeaderName(rs.getString("leaderName"));
+					System.out.println("Age: " + rs.getInt("age"));
+					l.setAge(rs.getInt("age"));
+					System.out.println("Years of Experience: " + rs.getInt("yearsOfExperience"));
+					l.setYearsOfExperience(rs.getInt("yearsOfExperience"));
+					System.out.println("Trade Union ID: " + rs.getInt("tradeUnionID"));
+					l.setTradeUnionId(rs.getInt("tradeUnionID"));
+					
+					list.add(l);
+					System.out.println();
+				}
+				return list;
+
+			} catch (SQLException e) {
+				System.out.println("Bad query");
+				e.printStackTrace();
+				return null;
+			}
+			
+		}
+		
+		
+		return null;
 	}
 	
 	public String update(int table, int id, String value, String feature) {

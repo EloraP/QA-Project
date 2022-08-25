@@ -1,7 +1,5 @@
 package QATraining.CRUDapp;
 
-
-
 public class Runner {
 	
 	
@@ -11,14 +9,5 @@ public class Runner {
     	start.options();
     	
     }
-    
-
-    
-
-  
-    
-   
-    
-    
     
 }

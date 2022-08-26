@@ -173,6 +173,126 @@ public class Choices {
 					q.delete(id, table);
 					break;
 					
+				case "search":
+					System.out.println("Enter table to search: ");
+					System.out.println("1. Strikes");
+					System.out.println("2. Trade Unions");
+					System.out.println("3. Leaders");
+					
+					String feat = "";
+					
+					table = sc.nextInt();
+					sc.nextLine();
+					switch(table) {
+					
+					case 1: 
+						//strikes
+						
+						System.out.println("Enter feature to search by:");
+						System.out.println("1. Date");
+						System.out.println("2. Location");
+						System.out.println("3. Trade Union");
+						System.out.println("4. Work Area");
+						System.out.println("5. Capacity");
+						
+						featureID = sc.nextInt();
+					
+						sc.nextLine();
+						switch(featureID) {
+						case 1: 
+							feat = "date";
+							break;
+						case 2:
+							feat = "location";
+							break;
+						case 3:
+							feat = "tradeUnionID";
+							break;
+						case 4: 
+							feat = "workArea";
+							break;
+						case 5: 
+							feat = "capacity";
+							break;
+						}
+						
+						System.out.println("Enter value: ");
+						value = sc.nextLine();
+						
+						q.search(1,  value,  feat);
+						
+						break;
+					
+					case 2: 
+						//trade unions
+						
+						System.out.println("Enter feature to update:");
+						System.out.println("1. Full Name");
+						System.out.println("2. Abreviated Name");
+						System.out.println("3. Number of Members");
+						System.out.println("4. Year Established");
+						System.out.println("5. Capacity");
+						
+						featureID = sc.nextInt();
+						sc.nextLine();
+						sc.nextLine();
+						switch(featureID) {
+						case 1: 
+							feat = "fullName";
+							break;
+						case 2:
+							feat = "TUName";
+							break;
+						case 3:
+							feat = "numbersOfMembers";
+							break;
+						case 4: 
+							feat = "established";
+							break;
+						}
+						
+						System.out.println("Enter value:");
+						value = sc.nextLine();
+						q.search(2,  value,  feat);
+						
+						break;
+						
+					case 3: 
+						//leaders
+						
+						System.out.println("Enter feature to update:");
+						System.out.println("1. Leader's Name");
+						System.out.println("2. Age");
+						System.out.println("3. Years of Experience");
+						System.out.println("4. Trade Union ID");
+						
+						featureID = sc.nextInt();
+						sc.nextLine();
+						switch(featureID) {
+						case 1: 
+							feat = "leaderName";
+							break;
+						case 2:
+							feat = "age";
+							break;
+						case 3:
+							feat = "yearsOfExperience";
+							break;
+						case 4: 
+							feat = "tradeUnionID";
+							break;
+						}
+						
+						System.out.println("Enter value:");
+						value = sc.nextLine();
+						
+						q.search(3,  value,  feat);
+						break;
+					
+					}
+					
+					
+					
 				default: 
 					System.out.println("Invalid CRUD choice");
 				}
@@ -299,7 +419,7 @@ public class Choices {
 				sc.nextLine();
 				leader.setTradeUnionId(intInput);
 			}else{
-				intInput = Integer.valueOf(intInput);
+				intInput = Integer.valueOf(strInput);
 				leader.setTradeUnionId(intInput);
 				
 			}

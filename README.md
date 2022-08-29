@@ -52,6 +52,5 @@
 
 
 <p align="center">
-  <img width="460"  src="https://i.imgur.com/F1sz8w2.png
-">
+  <img width="460"  src="https://i.imgur.com/F1sz8w2.png">
 </p>

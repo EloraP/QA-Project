@@ -1,24 +1,24 @@
 # CRUD Project
 
-###How to run CRUD Project
+How to run CRUD Project
 
 test test test
 
-#Entity Relationship Diagram
+Entity Relationship Diagram
 <p align="center">
   <img width="460"  src="https://i.imgur.com/pGcBVkp.png">
 </p>
 
 
 
-#Unified Modeling Language - Class Diagram
+Unified Modeling Language - Class Diagram
 
 <p align="center">
   <img width="460"  src="https://i.imgur.com/twSK18t.png">
 </p>
 
 
-##Sprints
+Sprints
 
 
 <p align="center">
@@ -50,7 +50,7 @@ test test test
   <img width="460"  src="https://i.imgur.com/WzwlRBf.png">
 </p>
 
-##User stories
+ User stories
 
 
 <p align="center">

@@ -4,14 +4,14 @@
 
 test test test
 
-###Entity Relationship Diagram
+#Entity Relationship Diagram
 <p align="center">
   <img width="460"  src="https://i.imgur.com/pGcBVkp.png">
 </p>
 
 
 
-###Unified Modeling Language - Class Diagram
+#Unified Modeling Language - Class Diagram
 
 <p align="center">
   <img width="460"  src="https://i.imgur.com/twSK18t.png">
